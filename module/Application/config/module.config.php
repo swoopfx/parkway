@@ -1,4 +1,8 @@
 <?php
+namespace Application;
+use Application\Controller\Factory\IndexControllerFactory;
+use Application\Service\Factory\CartServiceFactory;
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -60,6 +64,9 @@ return array(
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
+        'factories' => array(
+            "cartService"=>CartServiceFactory::class
+        ),
     ),
     'translator' => array(
         'locale' => 'en_US',
@@ -72,9 +79,28 @@ return array(
         ),
     ),
     'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+//         'invokables' => array(
+//             'Application\Controller\Index' => 'Application\Controller\IndexController'
+//         ),
+        'factories' => array(
+            'Application\Controller\Index' => IndexControllerFactory::class
         ),
+    ),
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+                    __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity'
+                )
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
+        )
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
@@ -91,6 +117,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy'
+        )
     ),
     // Placeholder for console routes
     'console' => array(

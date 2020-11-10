@@ -75,3 +75,15 @@ project and you should be ready to go! It should look something like below:
             Allow from all
         </Directory>
     </VirtualHost>
+    
+### Application setup
+
+    To setup the applicaition enviroment change the database variable in the config/autoload/doctrineorm.local.php file
+    to meet your desireesd enviroment 
+    
+    **Note: ** Database is designed for mysql 
+    
+    Run composer update the download all composer depenecy
+    
+    
+    Run the parkway.sql file to migrate database tables structure and data 
