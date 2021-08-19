@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$username = "ezekiel";
-$password = "Oluwaseun1@";
+$username = "";
+$password = "";
 
 return array(
     'doctrine' => array(
