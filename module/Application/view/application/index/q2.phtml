@@ -1,0 +1,158 @@
+<?php
+echo $this->headtitle("Question 2");
+?>
+
+<div id="parkway">
+    <table class="table table-hover mb-0">
+
+        <thead>
+            <tr>
+
+
+
+
+                <!-- <th>Amount Paid</th>
+				<th>Actions</th>
+				<th></th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+                <!-- <td><span class="text-primary">{{booking.bookingUid.toUpperCase()}}</span></td> -->
+                <!-- <td></td> -->
+
+
+
+
+                <th style="text-align:left">Savings</th>
+            </tr>
+
+            <tr>
+                <th style="text-align:left"> Local Government</th>
+                <td>
+                    <select v-if="lga.length" @change="onChange($event)" name="lga" id="lga">
+                        <option></option>
+                        <option v-for="(item , index) in lga" v-bind:key="index" :value="item.id">
+                            {{item.lgaName}}
+                        </option>
+                    </select>
+                </td>
+
+                <td></td>
+            </tr>
+
+            <tr v-if="selectedId != ''">
+                <th style="text-align:left"> Polling Total</th>
+                <td>
+
+                    {{total}} Score
+                </td>
+            </tr>
+            <tr v-if="selectedUnit != ''">
+                <th style="text-align:left"> Polling Units Details</th>
+                <td>
+                    <strong>Polling Unit Name : </strong>{{pollingUnitDetails.pollingUnitName}} <br>
+                    <strong>Polling Unit Number : </strong>{{pollingUnitDetails.pollingUnitNumber}} <br>
+                    <strong>Polling Ward Name : </strong>{{pollingUnitDetails.wardId.wardName}} <br>
+                    <strong>Entered User : </strong>{{pollingUnitDetails.enteredByUser}}
+                    <div v-if="pollingDUnitetailsData.length">
+
+                        <div v-for="det in pollingDUnitetailsData">
+                            <hr>
+                            <strong>Party Code:</strong> {{det.partyAbbreviation}}<br>
+                            <strong>Party Score:</strong> {{det.partyScore}}<br>
+                        </div>
+                    </div>
+                    <div v-else>
+                        No Polling Result
+                    </div>
+                </td>
+
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</div>
+<script>
+    let parkway = new Vue({
+        el: "#parkway",
+        data() {
+            return {
+                hey: "Love",
+                carts: [],
+                lga: [],
+                selectedId: '',
+                selectedUnit: '',
+
+                pollingUnits: [],
+                pollingUnitDetails: '',
+                pollingDUnitetailsData: [],
+                total: 0,
+                code: ""
+            }
+        },
+
+        mounted() {
+            // this.getcart();
+            // this.gettotal();
+            this.getAllLga();
+        },
+
+        methods: {
+
+
+
+            gettotal(event) {
+
+            },
+
+            getAllLga() {
+                this.selectedUnit = '';
+                this.selectedId = '';
+                axios.get("/application/index/get-all-lga").then(res => {
+                    this.lga = res.data.data;
+                })
+            },
+
+            getPollingDetails(event) {
+                this.selectedUnit = event.target.value;
+                axios.get("/application/index/get-polling-unit-details/" + this.selectedUnit).then(res => {
+                    this.pollingUnitDetails = res.data.pdetails;
+                    this.pollingDUnitetailsData = res.data.data;
+                })
+            },
+
+            onChange(event) {
+                // alert(event.target.value);
+                this.selectedUnit = '';
+                this.selectedId = event.target.value;
+                axios.get("/application/index/polling-unit-sum-total/" + this.selectedId).then(res => {
+                    this.total = res.data.data;
+                })
+                // axios.get("/application/index/get-polling-unit/" + this.selectedId).then(res => {
+
+                // 	this.pollingUnits = res.data.data;
+                // })
+            },
+
+            postdiscount() {
+                let formData = new FormData();
+                formData.append("price", this.totalPrice);
+                formData.append("code", this.code);
+                axios.post("/application/index/discount", formData).then(res => {
+                    this.totalPrice = res.data.discount;
+                })
+            }
+        },
+
+
+    });
+</script>

@@ -4,6 +4,7 @@ namespace Application\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Application\Controller\IndexController;
+use Application\Service\CartService;
 
 /**
  *
@@ -31,9 +32,13 @@ class IndexControllerFactory implements FactoryInterface
     {
         
        $ctr = new IndexController();
+       /**
+        * 
+        * @var CartService $cartService
+        */
        $cartService = $serviceLocator->getServiceLocator()->get("cartService");
        
-       $ctr->setCartService($cartService);
+       $ctr->setCartService($cartService)->setEntityManager($cartService->getEntityManager());
        return $ctr;
     }
 }

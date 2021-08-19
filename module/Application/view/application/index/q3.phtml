@@ -59,17 +59,16 @@
 					<strong>Polling Unit Number : </strong>{{pollingUnitDetails.pollingUnitNumber}} <br>
 					<strong>Polling Ward Name : </strong>{{pollingUnitDetails.wardId.wardName}} <br>
 					<strong>Entered User : </strong>{{pollingUnitDetails.enteredByUser}}
-					<div v-if="pollingDUnitetailsData.length">
+					
 						
-						<div v-for="det in pollingDUnitetailsData">
+						<div v-for="det in party">
 						<hr>
-							<strong>Party Code:</strong> {{det.partyAbbreviation}}<br>
-							<strong>Party Score:</strong> {{det.partyScore}}<br>
+						<label> Party :: {{det.partyname}}</label> <br>
+							<input type="number" class="form-control" name="" :placeholder="det.partyname" />
 						</div>
-					</div>
-					<div v-else>
-						No Polling Result
-					</div>
+						<hr>
+						<button value="" class="btn btn-block btn-primary">Submit</button>
+					
 				</td>
 
 			</tr>
@@ -98,8 +97,8 @@
 				pollingUnits: [],
 				pollingUnitDetails: '',
 				pollingDUnitetailsData: [],
-				totalPrice: 0,
-				code: ""
+				
+				party:[],
 			}
 		},
 
@@ -107,13 +106,23 @@
 			// this.getcart();
 			// this.gettotal();
 			this.getAllLga();
+			this.getAllParty();
 		},
 
 		methods: {
 			getcart() {
 				axios.get("/application/index/cart").then(res => {
 					this.carts = res.data.cart;
+					
 				})
+			},
+
+			getAllParty(){
+				axios.get("/application/index/get-all-party").then(res=>{
+					if(res.status == 200){
+						this.party = res.data.data;
+					}
+				}).catch();
 			},
 
 

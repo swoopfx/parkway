@@ -55,7 +55,9 @@ echo $this->headScript()
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+					<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Question 1') ?></a></li>
+					<li class="active"><a href="<?php echo $this->url('application/default', ["controller"=>"index", "action"=>"q2"]) ?>"><?php echo $this->translate('Question 2') ?></a></li>
+					<li class="active"><a href="<?php echo $this->url('application/default', ["controller"=>"index", "action"=>"q3"]) ?>"><?php echo $this->translate('Question 3') ?></a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->

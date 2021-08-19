@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$username = "root";
-$password = "";
+$username = "ezekiel";
+$password = "Oluwaseun1@";
 
 return array(
     'doctrine' => array(
@@ -12,10 +12,10 @@ return array(
                 'params' => array(
                     
                     'host' => $host,
-                    'port' => '3308',
+                    'port' => '8889',
                     'user' => $username,
                     'password' => $password,
-                    'dbname' => 'parkway',
+                    'dbname' => 'yii',
                     
                     // 'host' => 'us-cdbr-azure-east-c.cloudapp.net',
                     // 'port' => '3306',
@@ -29,10 +29,10 @@ return array(
                     // 'password' => 'Simple123!@#',
                     // 'dbname' => 'divancre_divan',
                     
-                    'charset' => 'utf8', // extra
-                    'driverOptions' => array(
-                        1002 => 'SET NAMES utf8'
-                    )
+//                     'charset' => 'utf8', // extra
+//                     'driverOptions' => array(
+//                         1002 => 'SET NAMES utf8'
+//                     )
                 )
             )
         
